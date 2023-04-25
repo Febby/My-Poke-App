@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import PokemonCard from './PokemonCard';
 import { useFetch } from '../hooks/useFetch';
+import styled from 'styled-components';
 
 const RandomPokemonList = ({ numberOfPokemons, searchTerm, typeFilter }) => {
   const { data, isLoading, error } = useFetch('https://pokeapi.co/api/v2/pokemon?limit=151');
@@ -39,14 +39,21 @@ const RandomPokemonList = ({ numberOfPokemons, searchTerm, typeFilter }) => {
   };
 
   return (
-    <div>
+    <StyledCardsContainer>
       {isLoading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
       {filteredPokemons().map((pokemon) => (
         <PokemonCard key={pokemon.name} pokemon={pokemon} />
       ))}
-    </div>
+    </StyledCardsContainer>
   );
 };
+
+const StyledCardsContainer = styled.div`
+display: grid; 
+grid-template-columns: 1fr 1fr 1fr; 
+grid-template-rows: 1fr 1fr; 
+gap: 10% 10%; 
+`;
 
 export default RandomPokemonList;

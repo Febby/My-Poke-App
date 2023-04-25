@@ -14,6 +14,8 @@ const PokemonCard = ({ pokemon }) => {
     }
   };
 
+ 
+
   return (
     <StyledPokemonCard>
       <h3>{pokemon.name}</h3>
@@ -26,22 +28,14 @@ const PokemonCard = ({ pokemon }) => {
   );
 };
 
+
 const StyledPokemonCard = styled.div`
-display: inline-block;
-width: calc(33% - 20px);
-margin: 10px;
 padding: 15px;
-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-border-radius: 4px;
-text-align: center;
-
-@media (max-width: 768px) {
-  width: calc(50% - 20px);
-}
-
-@media (max-width: 480px) {
-  width: calc(100% - 20px);
-}
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  text-align: center;
+  min-height: 200px;
 `;
+
 
 export default PokemonCard;
