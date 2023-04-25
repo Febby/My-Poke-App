@@ -44,8 +44,9 @@ const SearchBar = ({ onSearch, onReset }) => {
 
 const StyledForm = styled.form`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  margin:1rem;
 `;
 
 const ErrorMessage = styled.p`
