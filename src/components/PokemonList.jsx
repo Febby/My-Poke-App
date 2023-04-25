@@ -3,7 +3,7 @@ import PokemonCard from './PokemonCard';
 import { useFetch } from '../hooks/useFetch';
 import styled from 'styled-components';
 
-const RandomPokemonList = ({ numberOfPokemons, searchTerm, typeFilter }) => {
+const PokemonList = ({ numberOfPokemons, searchTerm, typeFilter }) => {
   const { data, isLoading, error } = useFetch('https://pokeapi.co/api/v2/pokemon?limit=151');
   const [detailedPokemons, setDetailedPokemons] = useState([]);
 
@@ -56,4 +56,4 @@ grid-template-rows: 1fr 1fr;
 gap: 5% 5%; 
 `;
 
-export default RandomPokemonList;
+export default PokemonList;

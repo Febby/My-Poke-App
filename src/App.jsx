@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import RandomPokemonList from './components/RandomPokemonList';
+import PokemonList from './components/PokemonList';
 import SearchBar from './components/SearchBar';
 import TypeFilter from './components/TypeFilter';
 
@@ -28,7 +28,7 @@ const App = () => {
       <p>Find your pokemon here and set them as your favorite</p>
       <SearchBar onSearch={handleSearch} onReset={handleReset} />
       <TypeFilter onTypeFilter={handleTypeFilter} />
-      <RandomPokemonList numberOfPokemons={numberOfPokemons} searchTerm={searchTerm} typeFilter={typeFilter} />
+      <PokemonList numberOfPokemons={numberOfPokemons} searchTerm={searchTerm} typeFilter={typeFilter} />
     </StyledApp>
   );
 };
