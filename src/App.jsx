@@ -1,64 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import PokemonList from './components/pokemonList'
-import SearchBar from './components/SearchBar'
-import './App.css'
+import React, { useState } from 'react';
+import RandomPokemonList from './components/RandomPokemonList';
+import SearchBar from './components/SearchBar';
+import TypeFilter from './components/TypeFilter';
 
-// function App() {
-//   const [count, setCount] = useState(0)
-
-//   return (
-//     <>
-//       <div>
-//         <a href="https://vitejs.dev" target="_blank">
-//           <img src={viteLogo} className="logo" alt="Vite logo" />
-//         </a>
-//         <a href="https://react.dev" target="_blank">
-//           <img src={reactLogo} className="logo react" alt="React logo" />
-//         </a>
-//       </div>
-//       <h1>Poke App</h1>
-//       <p className="read-the-docs">
-//         Here you can find your pokemon and add it as your favourite
-//       </p>
-//       <div className="card">
-//         <h2>Pokemon of the day</h2>
-        
-//         <p>
-//           Random Pokemon here
-//         </p>
-//       </div>
-//       <div className="card">
-//         <h2>Search Pokemon</h2>
-        
-//         <p>
-//           Search Your Pokemon here
-//         </p>
-//       </div>
-     
-//     </>
-//   )
-// }
-
-const App = () =>{
+const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [typeFilter, setTypeFilter] = useState('');
+  const numberOfPokemons = 6; 
+
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+  };
+
+  const handleTypeFilter = (type) => {
+    setTypeFilter(type);
+  };
 
   return (
-      <div>
-        <h1>Poke App</h1>
-        <p className="read-the-docs">
-        Here you can find your pokemon and add it as your favourite
-        </p>
-        <h2>Search Your Pokemon</h2>
-          <SearchBar onSearch={setSearchTerm}/>
-          <PokemonList searchTerm={searchTerm} />
+    <div className="App">
+      <h1>Poke App</h1>
+      <p>Find your pokemon here and set them as your favorite</p>
+        <SearchBar onSearch={handleSearch} />
+        <TypeFilter onTypeFilter={handleTypeFilter} />
+        <RandomPokemonList numberOfPokemons={numberOfPokemons} searchTerm={searchTerm} typeFilter={typeFilter} />
+    </div>
+  );
+};
 
-      </div>
-
-
-  )
-
-}
-
-export default App
+export default App;
