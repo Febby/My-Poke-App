@@ -27,31 +27,41 @@ const SearchBar = ({ onSearch, onReset }) => {
 
   return (
     <StyledForm onSubmit={handleSubmit}>
-      <input
+      <StyledInput
         type="text"
         placeholder="Search for a Pokemon"
         value={searchValue}
         onChange={handleInputChange}
       />
+      {error && <ErrorMessage>{error}</ErrorMessage>}
       <button type="submit">Search</button>
       <button type="button" onClick={handleReset}>
         Reset
       </button>
-      {error && <ErrorMessage>{error}</ErrorMessage>}
+      
     </StyledForm>
   );
 };
 
 const StyledForm = styled.form`
-  display: flex;
+  display: grid;
   flex-direction: row;
   align-items: center;
   margin:1rem;
 `;
 
+const StyledInput = styled.input`
+padding: 0.7rem;
+    margin: 1rem;
+    `
+
 const ErrorMessage = styled.p`
   color: red;
   font-size: 0.9rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin:1rem;
   margin-top: 5px;
 `;
 

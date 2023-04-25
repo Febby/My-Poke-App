@@ -51,9 +51,9 @@ const RandomPokemonList = ({ numberOfPokemons, searchTerm, typeFilter }) => {
 
 const StyledCardsContainer = styled.div`
 display: grid; 
-grid-template-columns: 1fr 1fr 1fr; 
+grid-template-columns: 1fr 1fr 1fr 1fr; 
 grid-template-rows: 1fr 1fr; 
-gap: 10% 10%; 
+gap: 5% 5%; 
 `;
 
 export default RandomPokemonList;
