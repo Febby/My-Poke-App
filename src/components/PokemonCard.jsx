@@ -39,11 +39,16 @@ const fadeIn = keyframes`
 
 const StyledPokemonCard = styled.div`
 display: grid;
-padding: 20px;
+padding: 3rem;
 box-shadow: rgba(0, 0, 0, 0.8) 0px 4px 6px;
 border-radius: 4px;
 text-align: center;
 animation: ${fadeIn} 0.5s ease-in-out;
+transition: all 0.1s ease-in;
+&:hover {
+  transform: translateY(-3px)}
+ }
+
 `;
 
 const PokemonName = styled.h3`
@@ -52,8 +57,12 @@ text-transform:capitalize;
 
 const PokemonImg = styled.img`
 background: #413d3d;
-    border-radius: 50%;
-    `
+border-radius: 50%;
+transition: all 0.1s ease-in;
+&:hover {
+  filter: drop-shadow(0 0 2em #b1b3b3aa);
+}
+`
 
 
 export default PokemonCard;
