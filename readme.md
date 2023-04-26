@@ -5,6 +5,8 @@
 
 A simple React app to search, filter, and favorite Pokémon using the [PokéAPI](https://pokeapi.co/).
 
+Preview [here](https://my-poke-app-ruddy.vercel.app/).
+
   
 
 ## Features
