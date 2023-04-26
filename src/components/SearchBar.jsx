@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
+import Toast from './Toast';
 import styled from 'styled-components';
 
 const SearchBar = ({ onSearch, onReset }) => {
   const [searchValue, setSearchValue] = useState('');
-  const [error, setError] = useState(null);
-
+  const [toastMessage, setToastMessage] = useState(null);
+  
   const handleInputChange = (event) => {
     setSearchValue(event.target.value);
-    setError(null); // Clear the error when user starts typing
+    setToastMessage(null); // Clear the error when user starts typing
   };
 
   const handleSubmit = (event) => {
@@ -15,10 +16,13 @@ const SearchBar = ({ onSearch, onReset }) => {
     if (searchValue.trim()) {
       onSearch(searchValue);
     } else {
-      setError('Please enter a valid search term.');
+      setToastMessage('Please enter a valid search term!');
     }
   };
 
+  const handleCloseToast = () => {
+    setToastMessage(null);
+  };
   const handleReset = () => {
     setSearchValue('');
     setError(null);
@@ -27,19 +31,21 @@ const SearchBar = ({ onSearch, onReset }) => {
 
   return (
     <StyledForm onSubmit={handleSubmit}>
+      
       <StyledInput
         type="text"
         placeholder="Search for a Pokemon"
         value={searchValue}
         onChange={handleInputChange}
       />
-      {error && <ErrorMessage>{error}</ErrorMessage>}
+      
       <Button type="submit" search>Search</Button>
       <Button type="button" onClick={handleReset}>
         Reset
       </Button>
-      
+      {toastMessage && <Toast message={toastMessage} duration={3000} onClose={handleCloseToast} />}
     </StyledForm>
+  
   );
 };
 
@@ -91,6 +97,7 @@ background-color: ${({ search }) =>
  }
   `
 const ErrorMessage = styled.p`
+  display:block;
   color: red;
   font-size: 0.9rem;
   display: flex;
