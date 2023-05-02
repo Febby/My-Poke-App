@@ -33,15 +33,7 @@ const GlobalStyle = createGlobalStyle`
     line-height: 1.1;
   }
   
-  @media (prefers-color-scheme: dark) {
-    
-    a:hover {
-      color: #747bff;
-    }
-    button {
-      background-color: #f9f9f9;
-    }
-  }
+  
   
 `;
  
