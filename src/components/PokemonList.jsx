@@ -1,48 +1,84 @@
 import React, { useState, useEffect } from 'react';
 import PokemonCard from './PokemonCard';
-import { useFetch } from '../hooks/useFetch';
 import styled from 'styled-components';
 
 const PokemonList = ({ numberOfPokemons, searchTerm, typeFilter }) => {
-  const { data, isLoading, error } = useFetch('https://pokeapi.co/api/v2/pokemon?limit=151');
-  const [detailedPokemons, setDetailedPokemons] = useState([]);
+  const [displayedPokemons, setDisplayedPokemons] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchDetailedPokemons = async () => {
-      if (!data) return;
-      const promises = data.results.map((pokemon) => fetch(pokemon.url).then((res) => res.json()));
-      const results = await Promise.all(promises);
-      setDetailedPokemons(results);
-    };
-
-    fetchDetailedPokemons();
-  }, [data]);
-
-  const randomPokemons = () => {
-    const shuffledPokemons = detailedPokemons.sort(() => 0.5 - Math.random());
-    return shuffledPokemons.slice(0, numberOfPokemons);
+  const fetchPokemonData = async (url) => {
+    const response = await fetch(url);
+    const pokemonData = await response.json();
+    return pokemonData;
   };
 
-  const filteredPokemons = () => {
-    if (!searchTerm && !typeFilter) return randomPokemons();
-
-    return detailedPokemons.filter((pokemon) => {
-      const nameMatch = searchTerm ? pokemon.name.toLowerCase().includes(searchTerm.toLowerCase()) : true;
-      if (!nameMatch) return false;
-
+  const getRandomPokemons = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=898');
+      const data = await response.json();
+      let shuffledPokemons = data.results.sort(() => 0.5 - Math.random());
       if (typeFilter) {
-        return pokemon.types.some((type) => type.type.name === typeFilter);
+        shuffledPokemons = shuffledPokemons.filter(async (pokemon) => {
+          const pokemonData = await fetchPokemonData(pokemon.url);
+          return pokemonData.types.some((type) => type.type.name === typeFilter);
+        });
+      }
+      const randomPokemonPromises = shuffledPokemons.slice(0, numberOfPokemons).map((pokemon) => fetchPokemonData(pokemon.url));
+      const randomPokemonData = await Promise.all(randomPokemonPromises);
+
+      // Filter out pokemons with no image
+      const pokemonsWithImages = randomPokemonData.filter((pokemon) => pokemon.sprites && pokemon.sprites.front_default);
+      setDisplayedPokemons(pokemonsWithImages);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const searchPokemon = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchTerm.toLowerCase()}`);
+
+      if (!response.ok) {
+        const message = `An error has occurred: ${response.statusText}`;
+        setError(message);
+        setDisplayedPokemons([]);
+        return;
       }
 
-      return true;
-    });
+      const pokemonData = await response.json();
+      if (typeFilter && !pokemonData.types.some((type) => type.type.name === typeFilter)) {
+        setError(`No Pokemon found with name "${searchTerm}" and type "${typeFilter}".`);
+        setDisplayedPokemons([]);
+      } else {
+        setDisplayedPokemons([pokemonData]);
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+  useEffect(() => {
+    if (searchTerm) {
+      searchPokemon();
+    } else {
+      getRandomPokemons();
+    }
+  }, [searchTerm, typeFilter]);
 
   return (
     <StyledCardsContainer>
       {isLoading && <p>Loading...</p>}
-      {error && <p>Error: {error.message}</p>}
-      {filteredPokemons().map((pokemon) => (
+      {error && <p>Error: {error}</p>}
+      {displayedPokemons.map((pokemon) => (
         <PokemonCard key={pokemon.name} pokemon={pokemon} />
       ))}
     </StyledCardsContainer>
@@ -50,10 +86,28 @@ const PokemonList = ({ numberOfPokemons, searchTerm, typeFilter }) => {
 };
 
 const StyledCardsContainer = styled.div`
-display: grid; 
-grid-template-columns: 1fr 1fr 1fr 1fr; 
-grid-template-rows: 1fr 1fr; 
-gap: 5% 5%; 
+  display: grid;
+  gap: 5% 5%;
+  
+  // Mobile devices (default)
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
+
+  // Small tablets and large phones
+  @media (min-width: 480px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  // Large tablets and small laptops
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  // Large laptops and desktops
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
 `;
+
 
 export default PokemonList;

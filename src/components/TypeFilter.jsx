@@ -42,6 +42,6 @@ const TypeFilter = ({ onTypeFilter }) => {
 
 const StyledSelect = styled.select`
 padding: 0.7rem;
-margin: 1rem;
+margin: 5rem;
 `;
 export default TypeFilter;
