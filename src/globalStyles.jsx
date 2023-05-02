@@ -34,10 +34,7 @@ const GlobalStyle = createGlobalStyle`
   }
   
   @media (prefers-color-scheme: dark) {
-    :root {
-      color: #213547;
-      background-color: #ffffff;
-    }
+    
     a:hover {
       color: #747bff;
     }
