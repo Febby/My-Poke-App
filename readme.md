@@ -33,7 +33,7 @@ Preview [here](https://my-poke-app-ruddy.vercel.app/).
 
   
 
-1. Clone this repository: `git clone [https://github.com/Febby/My-Poke-App]` [Repo here](https://github.com/Febby/My-Poke-App)
+1. Clone this repository: `git clone [https://github.com/Febby/My-Poke-App]`(https://github.com/Febby/My-Poke-App)
 2. Navigate to the project directory: `cd My-Poke-App`
 3. Install dependencies: `npm install`
 4. Run the application: `npm run dev`
