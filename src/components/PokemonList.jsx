@@ -86,12 +86,15 @@ const PokemonList = ({ numberOfPokemons, searchTerm, typeFilter }) => {
 };
 
 const StyledCardsContainer = styled.div`
-  display: grid;
-  gap: 5% 5%;
+
+  align-content:center;
   
   // Mobile devices (default)
-  grid-template-columns: 1fr;
-  grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
+  display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
 
   // Small tablets and large phones
   @media (min-width: 480px) {
@@ -105,7 +108,7 @@ const StyledCardsContainer = styled.div`
 
   // Large laptops and desktops
   @media (min-width: 1024px) {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 `;
 
